@@ -1,0 +1,36 @@
+* {
+	box-sizing: border-box;
+}
+
+#board {
+	height: 600px;
+	width: 600px;
+	margin: auto;
+	border: 1px solid black;
+}
+
+.row {
+	height: 25%;
+	width: 100%;
+}
+
+.tile {
+	height: 100%;
+	width: 110px;
+	display: inline-block;
+	border: 1px solid black;
+}
+
+#box1 {
+	background-color: red;
+}
+
+#box2 {
+	margin-top: 150px;
+}
+
+.card {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
