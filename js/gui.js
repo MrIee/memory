@@ -6,12 +6,27 @@ $(document).ready(function() {
 	var setupBoard = function() {
 		var i = 0;
 		var count = 0;
+		var z = 100;
+
 		for (var row in memory.board) {
 			while (count < 5) {
-				console.log( memory.board[row][i].value);
-				i++;
+
+				var imgPath = "url(../memory/" + memory.board[row][count].img + ")"
+
+				var $card = $("<div/>");
+				$card.addClass("card");
+				$card.attr("id", count);
+				$card.css({
+							"background-image": imgPath,
+							"z-index": z
+						});
+				$("body").append($card);
+
 				count++;
+				z--;
 			}
+
+			i++;
 			count = 0;
 		}
 	}
@@ -19,14 +34,27 @@ $(document).ready(function() {
 	setupBoard();
 
 	$("#move").on("click", function() {
-		$("#box1").position({
-			my: "center",
-			at: "center",
-			of: "#box2",
-			using: function(css) {
-				$(this).animate(css, 1000, "linear");
-			}
+		var z = 1;
+		$.each($(".card"), function(i, card) {
+
+			var $card = $(this);
+
+			setTimeout(function() {
+				
+				$card.position({
+					my: "center",
+					at: "center",
+					of: "#box2",
+					using: function(css) {
+						$card.animate(css, 1000, "linear");
+					}
+
+				});
+
+			}, 500 + ( i * 500));
+			
 		});
+		
 	});
 
 });

@@ -56,7 +56,7 @@ var memory = {
 			value: "10"
 		},
 		13: {
-			img: "playing-cards/jdiamonds.jpg",
+			img: "playing-cards/jackdiamonds.jpg",
 			value: "j"
 		},
 		14: {
@@ -76,7 +76,7 @@ var memory = {
 			value: "10"
 		},
 		18: {
-			img: "playing-cards/jspades.jpg",
+			img: "playing-cards/jackspades.jpg",
 			value: "j"
 		},
 		19: {
