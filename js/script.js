@@ -101,6 +101,10 @@ var memory = {
 		}
 	},
 
+	resetScore: function() {
+		this.pairs = 0;
+	},
+
 	play: function(cardValue) {
 		if (this.cardChecked === true) {
 
@@ -108,7 +112,6 @@ var memory = {
 
 				this.checkedCardValue = "";
 				this.cardChecked = false;
-				//alert("Cards are same");
 				this.pairs++;
 				return true;
 			}
@@ -116,7 +119,6 @@ var memory = {
 			else {
 				this.checkedCardValue = "";
 				this.cardChecked = false;
-				//alert("Cards are not same");
 				return false;
 			}
 		}

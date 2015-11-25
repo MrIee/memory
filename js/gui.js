@@ -1,3 +1,5 @@
+var flipSpeed = 500;
+
 var createDeckHTML= function() {
 	var i = 0;
 	var cardNum = 1;
@@ -52,13 +54,19 @@ var playRound = function() {
 			var memoryRound = memory.play($(this).attr("data-value"));
 
 			if (!memoryRound) {
+				setTimeout(function(){
+					$(".scoreboard").html("No match!");
+				}, flipSpeed);
+				
 				$card = $(this);
 				$(".full-card").off();
+
 				setTimeout(function() {
 					$lastCard.flip(false);
 					$card.flip(false);
+					$(".scoreboard").html("");
 					$(".full-card").on("click", playRound);
-				}, 1000);
+				}, flipSpeed + 500);
 			}
 
 			else if ( memoryRound === "no match" ) {
@@ -67,34 +75,36 @@ var playRound = function() {
 
 			else {
 				$lastCard.off();
-				$(this).off();	
+				$(this).off();
+				setTimeout(function(){
+					$(".scoreboard").html("You found a pair!");
+				}, flipSpeed);
 			}
 		}
 
 		if (memory.checkPairs()) {
-			alert("You Win!");
+			$(".scoreboard").html("You win!");
 		}
 
 	}	
 }
 
 $(document).ready(function() {
-	
+	var cardIntervalTime = 200;
 
 	$("#new-game").on("click", function(){
 		$(".full-card").remove();
-		// $(".full-card").each(function() {
-		// 	$(this).remove();
-		// });
 
 		memory.setupDeck();
+		memory.resetScore();
 		createDeckHTML();
+		$(".scoreboard").html("");
 
 		$(".full-card").flip({
 	        axis: "y",
 	        reverse: true,
 	        trigger: "manual",
-	        speed: 1000
+	        speed: flipSpeed
 		});
 	});
 
@@ -120,13 +130,13 @@ $(document).ready(function() {
 					}
 				});	
 
-			}, i * 200);
+			}, i * cardIntervalTime);
 			
 		});
 
 		setTimeout(function(){
 			$(".full-card").on("click", playRound);
-		}, 5000);
+		}, cardIntervalTime * memory.deck.length);
 		
 	});
 
