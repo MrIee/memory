@@ -12,7 +12,9 @@ var setupBoard = function() {
 			var $card = $("<div/>");
 			$card.addClass("card");
 			$card.addClass("full-card");
-			$card.attr("title", row + count);
+			$card.attr("id", row + count);
+			$card.attr("data-value", memory.board[row][count].value);
+			$card.attr("data-flipped", "false");
 			$card.css("z-index", z);
 
 			var $cardBack = $("<div/>");
@@ -39,7 +41,7 @@ var setupBoard = function() {
 }
 
 $(document).ready(function() {
-
+	var $lastCard;
 	memory.createBoard();
 	setupBoard();
 
@@ -62,7 +64,7 @@ $(document).ready(function() {
 				$card.position({
 					my: "center",
 					at: "center",
-					of: "#" + $card.attr("title"),
+					of: "#" + $card.attr("id"),
 					using: function(css) {
 						$card.animate(css, 1000, "easeInOutQuad");
 						setTimeout(function() {
@@ -78,7 +80,27 @@ $(document).ready(function() {
 
 		setTimeout(function(){
 			$(".full-card").on("click", function() {
-				$(this).flip("toggle");
+
+				if ($(this).attr("data-flipped") === "false") {
+					$(this).flip(true);
+
+					var memoryRound = memory.play($(this).attr("data-value"));
+
+					if ( !memoryRound) {
+						$lastCard.flip(false);
+						$(this).flip(false);
+					}
+
+					else if ( memoryRound === "no match" ) {
+						$lastCard = $(this);
+					}
+
+					else {
+						$lastCard.unbind("click");
+						$(this).unbind("click");
+					}
+				}
+
 			});
 		}, 8000);
 		
