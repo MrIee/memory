@@ -6,9 +6,9 @@ var setupBoard = function() {
 
 	for (var row in memory.board) {
 		while (count < 5) {
-
+			
 			var imgPath = "url(../memory/" + memory.board[row][count].img + ")"
-
+			
 			var $card = $("<div/>");
 			$card.addClass("card");
 			$card.addClass("full-card");
@@ -87,8 +87,12 @@ $(document).ready(function() {
 					var memoryRound = memory.play($(this).attr("data-value"));
 
 					if ( !memoryRound) {
-						$lastCard.flip(false);
-						$(this).flip(false);
+						$card = $(this);
+						setTimeout(function() {
+							$lastCard.flip(false);
+							$card.flip(false);
+						}, 1000);
+						
 					}
 
 					else if ( memoryRound === "no match" ) {
@@ -100,6 +104,10 @@ $(document).ready(function() {
 						$(this).unbind("click");
 					}
 				}
+
+			if (memory.checkPairs()) {
+				alert("You Win!");
+			}
 
 			});
 		}, 8000);
