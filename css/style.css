@@ -17,6 +17,8 @@ body {
 	text-align: center;
 	font-size: 2em;
 	background-color: rgba(255, 255, 255, 0.25);
+	border-bottom-right-radius: 10px; 
+	border-bottom-left-radius: 10px;
 }
 
 #board {
@@ -39,16 +41,8 @@ body {
 	width: 87px;
 	margin: 5px;
 	border: 1px solid rgba(255, 255, 255, 0.25);
-	border-radius: 10%;
+	border-radius: 10px;
 	display: inline-block;
-}
-
-#box1 {
-	background-color: red;
-}
-
-#box2 {
-	
 }
 
 .card, .full-card {
@@ -68,5 +62,47 @@ body {
 }
 
 .button {
-	
+	height: 40px;
+	width: 125px;
+	margin-bottom: 8px;
+	color: rgb(200, 200, 200);
+	background-color: rgba(0,0,0,0);
+	border: 2px solid rgb(200, 200, 200);;
+	border-radius: 15px;
+	position: relative;
+	outline:none;
+}
+
+.button:hover {
+	background-color: rgba(255, 255, 255, 0.20);
+}
+
+.button:active {
+	top: 3px;
+}
+
+
+
+#board2 {
+	height: 550px;
+	width: 480px;
+	position: absolute;
+	top: 700px;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+}
+
+#board2 > .row {
+	height: 20%;
+	width: 100%;
+}
+
+#board2 > .row > .tile {
+	height: 100px;
+	width: 70px;
+	margin: 5px;
+	border: 1px solid rgba(255, 255, 255, 0.25);
+	border-radius: 10px;
+	display: inline-block;
 }

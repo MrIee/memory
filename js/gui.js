@@ -1,4 +1,5 @@
 var flipSpeed = 500;
+var $lastCard = $("<div/>");
 
 var createDeckHTML= function() {
 	var i = 0;
@@ -42,10 +43,8 @@ var createDeckHTML= function() {
 	}
 }
 
-var $lastCard = $("<div/>");
-
 var playRound = function() {
-
+	$(".scoreboard").html("");
 	if ( $(this).attr("id") !== $lastCard.attr('id') ) {
 
 		if ($(this).attr("data-flipped") === "false") {
@@ -74,7 +73,9 @@ var playRound = function() {
 			}
 
 			else {
+				$lastCard.removeClass("full-card");
 				$lastCard.off();
+				$(this).removeClass("full-card");
 				$(this).off();
 				setTimeout(function(){
 					$(".scoreboard").html("You found a pair!");
@@ -90,14 +91,17 @@ var playRound = function() {
 }
 
 $(document).ready(function() {
+	$("#board").load("5x4.html");
+
 	var cardIntervalTime = 200;
 
 	$("#new-game").on("click", function(){
 		$(".full-card").remove();
 
 		memory.setupDeck();
-		memory.resetScore();
+		memory.resetGame();
 		createDeckHTML();
+		$lastCard = $("<div/>");
 		$(".scoreboard").html("");
 
 		$(".full-card").flip({

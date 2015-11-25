@@ -55,7 +55,8 @@ var memory = {
 		}
 	],
 
-	shuffle: function(array) { //From http://bost.ocks.org/mike/shuffle/
+	//Fisher-Yates Shuffle from http://bost.ocks.org/mike/shuffle/
+	shuffle: function(array) { 
 		var length = array.length; //m
 		var t;
 		var i;
@@ -92,7 +93,7 @@ var memory = {
 		this.createDeck();
 
 		for (var row in this.board) {
-			while (col < 5) {
+			while (col <= 4) {
 				this.board[row][col] = this.deck[cardNo];
 				col++;
 				cardNo++;
@@ -101,8 +102,10 @@ var memory = {
 		}
 	},
 
-	resetScore: function() {
+	resetGame: function() {
 		this.pairs = 0;
+		this.checkedCardValue = "";
+		this.cardChecked = false;
 	},
 
 	play: function(cardValue) {
