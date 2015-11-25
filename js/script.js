@@ -71,7 +71,6 @@ var memory = {
 			array[i] = t;
 		}
 
-		console.log(array.length);
 		return array;
 	},
 
@@ -87,7 +86,7 @@ var memory = {
 		this.shuffle(this.deck);
 	},
 
-	createBoard: function() {
+	setupDeck: function() {
 		var col = 0;
 		var cardNo = 0;
 		this.createDeck();
@@ -141,8 +140,3 @@ var memory = {
 	}
 
 };
-
-
-$(document).ready(function () {
-	memory.createBoard();
-});

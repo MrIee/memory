@@ -1,4 +1,4 @@
-var setupBoard = function() {
+var createDeckHTML= function() {
 	var i = 0;
 	var cardNum = 1;
 	var count = 0;
@@ -40,19 +40,65 @@ var setupBoard = function() {
 	}
 }
 
-$(document).ready(function() {
-	var $lastCard;
-	memory.createBoard();
-	setupBoard();
+var $lastCard = $("<div/>");
 
-	$(".full-card").flip({
-		        axis: "y",
-		        reverse: true,
-		        trigger: "manual",
-		        speed: 1000
+var playRound = function() {
+
+	if ( $(this).attr("id") !== $lastCard.attr('id') ) {
+
+		if ($(this).attr("data-flipped") === "false") {
+			$(this).flip(true);
+
+			var memoryRound = memory.play($(this).attr("data-value"));
+
+			if (!memoryRound) {
+				$card = $(this);
+				$(".full-card").off();
+				setTimeout(function() {
+					$lastCard.flip(false);
+					$card.flip(false);
+					$(".full-card").on("click", playRound);
+				}, 1000);
+			}
+
+			else if ( memoryRound === "no match" ) {
+				$lastCard = $(this);
+			}
+
+			else {
+				$lastCard.off();
+				$(this).off();	
+			}
+		}
+
+		if (memory.checkPairs()) {
+			alert("You Win!");
+		}
+
+	}	
+}
+
+$(document).ready(function() {
+	
+
+	$("#new-game").on("click", function(){
+		$(".full-card").remove();
+		// $(".full-card").each(function() {
+		// 	$(this).remove();
+		// });
+
+		memory.setupDeck();
+		createDeckHTML();
+
+		$(".full-card").flip({
+	        axis: "y",
+	        reverse: true,
+	        trigger: "manual",
+	        speed: 1000
+		});
 	});
 
-	$("#move").on("click", function() {
+	$("#deal").on("click", function() {
 		var z = 1;
 
 		$(".full-card").each(function(i, card) {
@@ -66,7 +112,7 @@ $(document).ready(function() {
 					at: "center",
 					of: "#" + $card.attr("id"),
 					using: function(css) {
-						$card.animate(css, 1000, "easeInOutQuad");
+						$card.animate(css, 500, "easeInOutQuad");
 						setTimeout(function() {
 							$card.css("z-index", z);
 							z++;
@@ -74,43 +120,13 @@ $(document).ready(function() {
 					}
 				});	
 
-			}, i * 350);
+			}, i * 200);
 			
 		});
 
 		setTimeout(function(){
-			$(".full-card").on("click", function() {
-
-				if ($(this).attr("data-flipped") === "false") {
-					$(this).flip(true);
-
-					var memoryRound = memory.play($(this).attr("data-value"));
-
-					if ( !memoryRound) {
-						$card = $(this);
-						setTimeout(function() {
-							$lastCard.flip(false);
-							$card.flip(false);
-						}, 1000);
-						
-					}
-
-					else if ( memoryRound === "no match" ) {
-						$lastCard = $(this);
-					}
-
-					else {
-						$lastCard.unbind("click");
-						$(this).unbind("click");
-					}
-				}
-
-			if (memory.checkPairs()) {
-				alert("You Win!");
-			}
-
-			});
-		}, 8000);
+			$(".full-card").on("click", playRound);
+		}, 5000);
 		
 	});
 
