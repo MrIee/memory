@@ -28,8 +28,9 @@ var createDeckHTML = function(numColumns, boardSize) {
 			$cardFront.addClass("card");
 			
 			$cardFront.css("background-image", imgPath);
-$card.append($cardFront);
+
 			$card.append($cardBack);
+			$card.append($cardFront);
 			
 			$("body").append($card);
 
