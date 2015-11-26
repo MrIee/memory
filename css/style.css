@@ -21,6 +21,37 @@ body {
 	border-bottom-left-radius: 10px;
 }
 
+.board-sizes-menu {
+	height: 300px;
+	width: 200px;
+	border: 2px solid rgb(200, 200, 200);
+	border-radius: 20px;
+	text-align: center;
+	position: absolute;
+	top: 60px;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+}
+
+.board-sizes-menu h1 {
+	font-size: 1.5em;
+	text-align: center;
+	color: rgb(200, 200, 200);
+}
+
+.board-sizes-menu button {
+	height: 60px;
+	width: 150px;
+	margin-bottom: 8px;
+	color: rgb(200, 200, 200);
+	background-color: rgba(0,0,0,0);
+	border: 2px solid rgb(200, 200, 200);;
+	border-radius: 15px;
+	outline:none;
+	position: relative;
+}
+
 #board {
 	height: 540px;
 	width: 487px;
@@ -73,15 +104,13 @@ body {
 	outline:none;
 }
 
-.button:hover {
+button:hover {
 	background-color: rgba(255, 255, 255, 0.20);
 }
 
-.button:active {
+button:active {
 	top: 3px;
 }
-
-
 
 #board2 {
 	height: 550px;
@@ -101,6 +130,31 @@ body {
 #board2 > .row > .tile {
 	height: 100px;
 	width: 70px;
+	margin: 5px;
+	border: 1px solid rgba(255, 255, 255, 0.25);
+	border-radius: 10px;
+	display: inline-block;
+}
+
+
+#board3 {
+	height: 470px;
+	width: 413px;
+	position: absolute;
+	top: 700px;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+}
+
+#board3 > .row {
+	height: 16.67%;
+	width: 100%;
+}
+
+#board3 > .row > .tile {
+	height: 70px;
+	width: 49px;
 	margin: 5px;
 	border: 1px solid rgba(255, 255, 255, 0.25);
 	border-radius: 10px;

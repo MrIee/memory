@@ -14,7 +14,7 @@ var memory = {
 
 	cards: [
 		{
-			img: "playing-cards/aceclubs.jpg",
+			img: "playing-cards/acespades.jpg",
 			value: "ab"
 		},
 		{
@@ -52,6 +52,50 @@ var memory = {
 		{
 			img: "playing-cards/kinghearts.jpg",
 			value: "kr"
+		},
+		{
+			img: "playing-cards/5spades.jpg",
+			value: "5b"
+		},
+		{
+			img: "playing-cards/6spades.jpg",
+			value: "6b"
+		},
+		{
+			img: "playing-cards/7spades.jpg",
+			value: "7b"
+		},
+		{
+			img: "playing-cards/8spades.jpg",
+			value: "8b"
+		},
+		{
+			img: "playing-cards/9spades.jpg",
+			value: "9b"
+		},
+		{
+			img: "playing-cards/5hearts.jpg",
+			value: "5r"
+		},
+		{
+			img: "playing-cards/6hearts.jpg",
+			value: "6r"
+		},
+		{
+			img: "playing-cards/7hearts.jpg",
+			value: "7r"
+		},
+		{
+			img: "playing-cards/8hearts.jpg",
+			value: "8r"
+		},
+		{
+			img: "playing-cards/9hearts.jpg",
+			value: "9r"
+		},
+		{
+			img: "playing-cards/blank.jpg",
+			value: "bl"
 		}
 	],
 
@@ -75,8 +119,8 @@ var memory = {
 		return array;
 	},
 
-	createDeck: function() {
-		var newDeck = this.cards.slice();
+	createDeck: function(numCards) {
+		var newDeck = this.cards.slice(0, numCards);
 		length = newDeck.length;
 
 		for (var i = 0; i < length; i++) {
@@ -87,13 +131,17 @@ var memory = {
 		this.shuffle(this.deck);
 	},
 
-	setupDeck: function() {
+//Parameters: 
+	//decklength (i.e. half the number of spaces in the grid e.g. 10),
+	//number of rows in grid
+	setupDeck: function(numCards, numRows) {
+		console.log(numCards, numRows);
 		var col = 0;
 		var cardNo = 0;
-		this.createDeck();
+		this.createDeck(numCards);
 
 		for (var row in this.board) {
-			while (col <= 4) {
+			while (col <= numRows) {
 				this.board[row][col] = this.deck[cardNo];
 				col++;
 				cardNo++;

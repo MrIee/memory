@@ -91,18 +91,18 @@ var playRound = function() {
 }
 
 $(document).ready(function() {
-	$("#board").load("5x4.html");
+	
 
 	var cardIntervalTime = 200;
 
-	$("#new-game").on("click", function(){
-		$(".full-card").remove();
+	$("#5x4").on("click", function() {
+		var numCards = parseInt( $(this).attr("data-numCards") );
+		var numRows = parseInt( $(this).attr("data-rows") );
 
-		memory.setupDeck();
-		memory.resetGame();
+		memory.setupDeck(numCards, numRows);
 		createDeckHTML();
-		$lastCard = $("<div/>");
-		$(".scoreboard").html("");
+		$(this).parent().hide();
+		$("#board").load("5x4.html");
 
 		$(".full-card").flip({
 	        axis: "y",
@@ -110,6 +110,17 @@ $(document).ready(function() {
 	        trigger: "manual",
 	        speed: flipSpeed
 		});
+		
+	});
+
+	$("#new-game").on("click", function(){
+		$(".full-card").remove();
+		$(".row").remove();
+		$(".board-sizes-menu").show();
+
+		memory.resetGame();
+		$lastCard = $("<div/>");
+		$(".scoreboard").html("");
 	});
 
 	$("#deal").on("click", function() {
