@@ -1,3 +1,18 @@
+ion.sound({
+	sounds : [
+		{ name: "cardSlide3" },
+		{ name: "cardPlace3" },
+		{ name: "cardPlace4" }
+
+	],
+
+	path: "sounds/",
+	preload: true,
+	multiplay: true,
+	volume: 0.6
+});
+
+
 var flipSpeed = 500;
 var $lastCard = $("<div/>");
 
@@ -50,6 +65,7 @@ var playRound = function() {
 
 		if ($(this).attr("data-flipped") === "false") {
 			$(this).flip(true);
+			ion.sound.play("cardPlace3");
 
 			var memoryRound = memory.play($(this).attr("data-value"));
 
@@ -63,7 +79,9 @@ var playRound = function() {
 
 				setTimeout(function() {
 					$lastCard.flip(false);
+					ion.sound.play("cardPlace4");
 					$card.flip(false);
+					ion.sound.play("cardPlace4");
 					$(".scoreboard").html("");
 					$(".full-card").on("click", playRound);
 				}, flipSpeed + 500);
@@ -105,28 +123,35 @@ var setupNewGame = function(numColumns, boardSize) {
 	});
 }
 
+var setupNewBoard = function($selection) {
+	var numCards = parseInt( $selection.attr("data-numCards") );
+	var numColumns = parseInt( $selection.attr("data-columns") );
+	var boardSize = $selection.attr("id");
+
+	memory.setupDeck(numCards, numColumns, boardSize);
+	$(".playing-area").load(boardSize + ".html");
+	
+	setupNewGame(numColumns, boardSize);
+}
+
 $(document).ready(function() {
 
 	var cardIntervalTime = 200;
 
 	$("#5x4").on("click", function() {
-		var numCards = parseInt( $(this).attr("data-numCards") );
-		var numColumns = parseInt( $(this).attr("data-columns") );
+		setupNewBoard($(this));
 
-		memory.setupDeck(numCards, numColumns, "5x4");
-		$(".playing-area").load("5x4.html");
-		
-		setupNewGame(numColumns, "5x4");
+		$(".scoreboard").html("");
+		$(".full-card").css({
+			height: "125px",
+			width: "87px"
+		});
 	});
 
 	$("#6x5").on("click", function() {
-		var numCards = parseInt( $(this).attr("data-numCards") );
-		var numColumns = parseInt( $(this).attr("data-columns") );
-
-		memory.setupDeck(numCards, numColumns, "6x5");
-		$(".playing-area").load("6x5.html");
+		setupNewBoard($(this));
 		
-		setupNewGame(numColumns, "6x5");
+		$(".scoreboard").html("");
 		$(".full-card").css({
 			height: "100px",
 			width: "70px"
@@ -134,13 +159,9 @@ $(document).ready(function() {
 	});
 
 	$("#7x6").on("click", function() {
-		var numCards = parseInt( $(this).attr("data-numCards") );
-		var numColumns = parseInt( $(this).attr("data-columns") );
+		setupNewBoard($(this));
 
-		memory.setupDeck(numCards, numColumns, "7x6");
-		$(".playing-area").load("7x6.html");
-		
-		setupNewGame(numColumns, "7x6");
+		$(".scoreboard").html("");
 		$(".full-card").css({
 			height: "70px",
 			width: "49px"
@@ -154,7 +175,7 @@ $(document).ready(function() {
 
 		memory.resetGame();
 		$lastCard = $("<div/>");
-		$(".scoreboard").html("");
+		$(".scoreboard").html("Memory!");
 	});
 
 	$("#deal").on("click", function() {
@@ -172,6 +193,8 @@ $(document).ready(function() {
 					of: "#" + $card.attr("id"),
 					using: function(css) {
 						$card.animate(css, 500, "easeInOutQuad");
+						ion.sound.play("cardSlide3");
+
 						setTimeout(function() {
 							$card.css("z-index", z);
 							z++;

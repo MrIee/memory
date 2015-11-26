@@ -111,8 +111,8 @@ var memory = {
 			value: "9r"
 		},
 		{
-			img: "playing-cards/blank.jpg",
-			value: "bl"
+			img: "playing-cards/jokerred.jpg",
+			value: "jkr"
 		}
 	],
 
