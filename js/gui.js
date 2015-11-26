@@ -1,22 +1,22 @@
 var flipSpeed = 500;
 var $lastCard = $("<div/>");
 
-var createDeckHTML= function() {
+var createDeckHTML = function(numColumns, boardSize) {
 	var i = 0;
 	var cardNum = 1;
 	var count = 0;
 	var z = 100;
 
-	for (var row in memory.board) {
-		while (count < 5) {
+	for (var row in memory.board[boardSize]) {
+		while (count < numColumns) {
 			
-			var imgPath = "url(../memory/" + memory.board[row][count].img + ")"
+			var imgPath = "url(../memory/" + memory.board[boardSize][row][count].img + ")"
 			
 			var $card = $("<div/>");
 			$card.addClass("card");
 			$card.addClass("full-card");
 			$card.attr("id", row + count);
-			$card.attr("data-value", memory.board[row][count].value);
+			$card.attr("data-value", memory.board[boardSize][row][count].value);
 			$card.attr("data-flipped", "false");
 			$card.css("z-index", z);
 
@@ -28,9 +28,9 @@ var createDeckHTML= function() {
 			$cardFront.addClass("card");
 			
 			$cardFront.css("background-image", imgPath);
-
+$card.append($cardFront);
 			$card.append($cardBack);
-			$card.append($cardFront);
+			
 			$("body").append($card);
 
 			count++;
@@ -84,37 +84,70 @@ var playRound = function() {
 		}
 
 		if (memory.checkPairs()) {
-			$(".scoreboard").html("You win!");
+			setTimeout(function(){
+				$(".scoreboard").html("You win!");
+			}, flipSpeed * 2);
 		}
 
 	}	
 }
 
+var setupNewGame = function(numColumns, boardSize) {
+	createDeckHTML(numColumns, boardSize);
+	$(".board-sizes-menu").hide();
+
+	$(".full-card").flip({
+        axis: "y",
+        reverse: true,
+        trigger: "manual",
+        speed: flipSpeed
+	});
+}
+
 $(document).ready(function() {
-	
 
 	var cardIntervalTime = 200;
 
 	$("#5x4").on("click", function() {
 		var numCards = parseInt( $(this).attr("data-numCards") );
-		var numRows = parseInt( $(this).attr("data-rows") );
+		var numColumns = parseInt( $(this).attr("data-columns") );
 
-		memory.setupDeck(numCards, numRows);
-		createDeckHTML();
-		$(this).parent().hide();
-		$("#board").load("5x4.html");
-
-		$(".full-card").flip({
-	        axis: "y",
-	        reverse: true,
-	        trigger: "manual",
-	        speed: flipSpeed
-		});
+		memory.setupDeck(numCards, numColumns, "5x4");
+		$(".playing-area").load("5x4.html");
 		
+		setupNewGame(numColumns, "5x4");
+	});
+
+	$("#6x5").on("click", function() {
+		var numCards = parseInt( $(this).attr("data-numCards") );
+		var numColumns = parseInt( $(this).attr("data-columns") );
+
+		memory.setupDeck(numCards, numColumns, "6x5");
+		$(".playing-area").load("6x5.html");
+		
+		setupNewGame(numColumns, "6x5");
+		$(".full-card").css({
+			height: "100px",
+			width: "70px"
+		});
+	});
+
+	$("#7x6").on("click", function() {
+		var numCards = parseInt( $(this).attr("data-numCards") );
+		var numColumns = parseInt( $(this).attr("data-columns") );
+
+		memory.setupDeck(numCards, numColumns, "7x6");
+		$(".playing-area").load("7x6.html");
+		
+		setupNewGame(numColumns, "7x6");
+		$(".full-card").css({
+			height: "70px",
+			width: "49px"
+		});
 	});
 
 	$("#new-game").on("click", function(){
-		$(".full-card").remove();
+		$(".card").remove();
 		$(".row").remove();
 		$(".board-sizes-menu").show();
 

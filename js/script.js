@@ -1,9 +1,26 @@
 var memory = {
 	board: {
-		row0: {},
-		row1: {},
-		row2: {},
-		row3: {}
+		"5x4": {
+			row0: {},
+			row1: {},
+			row2: {},
+			row3: {}
+		},
+		"6x5": {
+			row0: {},
+			row1: {},
+			row2: {},
+			row3: {},
+			row4: {}
+		},
+		"7x6": {
+			row0: {},
+			row1: {},
+			row2: {},
+			row3: {},
+			row4: {},
+			row5: {}
+		}
 	},
 
 	cardChecked: false,
@@ -134,15 +151,15 @@ var memory = {
 //Parameters: 
 	//decklength (i.e. half the number of spaces in the grid e.g. 10),
 	//number of rows in grid
-	setupDeck: function(numCards, numRows) {
-		console.log(numCards, numRows);
+	setupDeck: function(numCards, numColumns, boardSize) {
 		var col = 0;
 		var cardNo = 0;
+		var board = this.board[boardSize];
 		this.createDeck(numCards);
 
-		for (var row in this.board) {
-			while (col <= numRows) {
-				this.board[row][col] = this.deck[cardNo];
+		for (var row in board) {
+			while (col < numColumns) {
+				board[row][col] = this.deck[cardNo];
 				col++;
 				cardNo++;
 			}
