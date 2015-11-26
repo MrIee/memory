@@ -36,7 +36,7 @@ var createDeckHTML = function(numColumns, boardSize) {
 			$card.css("z-index", z);
 
 			var $cardBack = $("<div/>");
-			$cardBack.addClass("card");
+			$cardBack.addClass("card cardBack");
 			$cardBack.css("background-image", "url(../memory/playing-cards/back.jpg");
 
 			var $cardFront = $("<div/>");
@@ -175,6 +175,7 @@ $(document).ready(function() {
 
 		memory.resetGame();
 		$lastCard = $("<div/>");
+		$(".selectCardBG").val("url(../memory/card-themes/default.jpg)")
 		$(".scoreboard").html("Memory!");
 	});
 
@@ -210,6 +211,10 @@ $(document).ready(function() {
 			$(".full-card").on("click", playRound);
 		}, cardIntervalTime * memory.deck.length);
 		
+	});
+
+	$(".selectCardBG").change(function (){
+	    $(".cardBack").css("background-image", $(this).val());
 	});
 
 });

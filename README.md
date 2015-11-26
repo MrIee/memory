@@ -6,6 +6,7 @@ http://alexwlee89.github.io/memory/
 * [About](#about)
 * [Approach](#approach)
 * [Features](#features)
+* [Bugs](#bugs)
 * [Libraries](#libraries)
 
 
@@ -25,6 +26,14 @@ Once the dom manipulation was in place however, attaching the logic to it was a 
 * 3 different board sizes ( small[5x4], medium[6x5] and large[7x6] )
 * 3D Flipping Effect
 * Sounds
+
+
+##<a name="bugs"></a>Bugs
+* Sometimes you are unable to click on the last card that you flipped. Occasionally occurs, not enough to be detrimental to gameplay. Unsure of how to replicate this bug.
+
+* If new game button is clicked while cards are dealing, jQuery will continue to try and deal the cards even though the elements no longer exist on the page. This leaves a long list of "Uncaught TypeError's" in the console.
+
+* ion.sound tries to load .mp3, .ogg, ,mp4 and .aac versions of the audio files for cross browser compatibility. Errors are shown in the console but they have no effect on how the game perfoms.
 
 
 ##<a name="libraries"></a>Libraries
